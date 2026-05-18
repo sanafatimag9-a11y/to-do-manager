@@ -4,21 +4,21 @@ resource "azurerm_resource_group" "rg" {
 }
 
 resource "azurerm_virtual_network" "vnet" {
-  name                = "to-do-manager-centralus-vnet"
+  name                = "to-do-list-centralus-vnet"
   address_space       = ["10.0.0.0/16"]
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
 }
 
 resource "azurerm_subnet" "subnet" {
-  name                 = "to-do-manager-centralus-subnet"
+  name                 = "to-do-list-centralus-subnet"
   resource_group_name  = azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = ["10.0.1.0/24"]
 }
 
 resource "azurerm_network_security_group" "nsg" {
-  name                = "to-do-manager-centralus-nsg"
+  name                = "to-do-list-centralus-nsg"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
 
@@ -48,7 +48,7 @@ resource "azurerm_network_security_group" "nsg" {
 }
 
 resource "azurerm_public_ip" "pip" {
-  name                = "to-do-manager-centralus-pip"
+  name                = "to-do-list-centralus-pip"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   allocation_method   = "Static"
@@ -56,12 +56,12 @@ resource "azurerm_public_ip" "pip" {
 }
 
 resource "azurerm_network_interface" "nic" {
-  name                = "to-do-manager-centralus-nic"
+  name                = "to-do-list-centralus-nic"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
 
   ip_configuration {
-    name                          = "to-do-manager-centralus-ipconfig"
+    name                          = "to-do-list-centralus-ipconfig"
     subnet_id                     = azurerm_subnet.subnet.id
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = azurerm_public_ip.pip.id
@@ -74,7 +74,7 @@ resource "azurerm_network_interface_security_group_association" "nsg_assoc" {
 }
 
 resource "azurerm_linux_virtual_machine" "vm" {
-  name                = "to-do-manager-centralus-vm"
+  name                = "to-do-list-centralus-vm"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   size                = var.vm_size
@@ -92,7 +92,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   os_disk {
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
-    name                 = "to-do-manager-centralus-osdisk"
+    name                 = "to-do-list-centralus-osdisk"
   }
 
   source_image_reference {
