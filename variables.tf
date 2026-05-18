@@ -1,0 +1,21 @@
+variable "location" {
+  description = "Azure region for resources"
+  type        = string
+  default     = "centralus"
+}
+
+variable "vm_size" {
+  description = "Azure VM size"
+  type        = string
+  default     = "Standard_D2s_v3"
+}
+
+variable "resource_group_name" {
+  description = "Resource group name"
+  type        = string
+}
+
+variable "admin_username" {
+  description = "Admin username for the VM"
+  type        = string
+}
